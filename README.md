@@ -43,7 +43,7 @@ EQEMU_DB_PASSWORD=password
 ```
 
 Note: If your .env APP_KEY is empty, run `php artisan key:generate` to generate a key.
-Now run migrations. This will populate your allaclone db with tables used for sessions and caching.
+Now run migrations. This will populate your magelo db with tables used for sessions and caching.
 ```
 php artisan migrate
 ```
