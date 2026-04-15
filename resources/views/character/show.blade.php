@@ -1,6 +1,15 @@
 @extends('layouts.default')
 
 @section('content')
+    <div x-data='compare(@json($character->name))' class="mb-4">
+        <button x-on:click="toggle()" :class="isSelected ? 'btn btn-sm btn-soft btn-warning' : 'btn btn-sm btn-soft'">
+            <span x-text="isSelected ? 'Remove from Compare' : 'Add to Compare'"></span>
+        </button>
+        <div x-show="showBar" x-cloak class="inline-flex items-center gap-2 ml-2">
+            <a :href="compareUrl" class="btn btn-sm btn-soft btn-accent">Compare</a>
+            <button x-on:click="clear()" class="btn btn-sm btn-soft btn-error">Clear</button>
+        </div>
+    </div>
     <div class="relative mb-6">
         <div class="flex flex-col sm:flex-row sm:items-center gap-4 pb-4">
             <div class="flex items-center gap-4 min-w-0">

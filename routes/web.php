@@ -9,6 +9,7 @@ use App\Http\Controllers\BarterController;
 use App\Http\Controllers\BazaarController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CharacterController;
+use App\Http\Controllers\CharacterCompareController;
 
 Route::get('/', function () {
     return view('home');
@@ -19,6 +20,7 @@ Route::get('/search/suggest', [SearchController::class, 'suggest']);
 Route::get('/search', [SearchController::class, 'index'])->name('search.results');
 
 Route::get('/guild/{guild}', [GuildController::class, 'show'])->name('guild.show');
+Route::get('/character/compare', [CharacterCompareController::class, 'index'])->name('character.compare');
 Route::get('/character/{character}', [CharacterController::class, 'show'])->name('character.show');
 Route::get('/bazaar', [BazaarController::class, 'index'])->name('bazaar.index');
 Route::get('/barter', [BarterController::class, 'index'])->name('barter.index');

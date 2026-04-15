@@ -48,7 +48,17 @@
 
 <div class="w-full p-4 bg-base-200 rounded-lg border-1 border-base-content/20">
     <div class="flex justify-between items-start">
-        <h1 class="text-2xl font-bold truncate">{{ $item->Name }}</h1>
+        @php
+            $template = config('everquest.item_links');
+            $href = $template ? str_replace('{item_id}', $item->id, $template) : '#';
+            $hasHref = $href && $href !== '#';
+        @endphp
+        <h1 class="text-2xl font-bold leading-tight break-words whitespace-normal" style="display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; text-overflow:ellipsis;">
+            <a @if(!$hasHref) href="#" @click.prevent @else href="{{ $href }}" target="_blank" rel="noopener" @endif
+               class="link-info link-hover">
+                {{ $item->Name }}
+            </a>
+        </h1>
         <img src="{{ asset('img/icons/' . $item->icon . '.png') }}" alt="{{ $item->Name }}" class="w-10 h-auto ml-4" />
     </div>
 

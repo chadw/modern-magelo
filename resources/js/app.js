@@ -195,6 +195,58 @@ Alpine.data('draggableBag', ({ id }) => ({
 
 }));
 
+Alpine.data('compare', (name = '') => ({
+    name,
+    key: 'compareChars',
+    isSelected: false,
+    showBar: false,
+    compareUrl: '#',
+
+    init() {
+        this.refresh();
+        window.addEventListener('storage', () => this.refresh());
+    },
+
+    getList() {
+        try { return JSON.parse(localStorage.getItem(this.key) || '[]'); } catch (e) { return []; }
+    },
+
+    saveList(list) {
+        localStorage.setItem(this.key, JSON.stringify(list));
+    },
+
+    refresh() {
+        const list = this.getList();
+        this.isSelected = list.includes(this.name);
+        if (list.length >= 2) {
+            this.showBar = true;
+            const a = encodeURIComponent(list[0]);
+            const b = encodeURIComponent(list[1]);
+            this.compareUrl = '/character/compare?a=' + a + '&b=' + b;
+        } else {
+            this.showBar = false;
+            this.compareUrl = '#';
+        }
+    },
+
+    toggle() {
+        let list = this.getList();
+        if (this.isSelected) {
+            list = list.filter(x => x !== this.name);
+        } else {
+            if (list.length >= 2) list.shift();
+            list.push(this.name);
+        }
+        this.saveList(list);
+        this.refresh();
+    },
+
+    clear() {
+        this.saveList([]);
+        this.refresh();
+    }
+}));
+
 Alpine.store('tooltipz', {
     content: '',
     visible: false,
