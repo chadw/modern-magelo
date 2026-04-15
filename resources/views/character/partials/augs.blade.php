@@ -42,7 +42,8 @@
                                 item_class="inline-flex items-center"
                                 :instance="$augTtid"
                             />
-                            <span class="text-base-content/50">Type {{ $entry['type'] }}{{ $entry['desc'] ? " ({$entry['desc']})" : '' }}</span>
+                            <span class="md:hidden text-base-content/50">Type {{ $entry['type'] }}</span>
+                            <span class="hidden md:inline text-base-content/50">Type {{ $entry['type'] }}{{ $entry['desc'] ? " ({$entry['desc']})" : '' }}</span>
                         </span>
                     @endforeach
                 </div>

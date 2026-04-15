@@ -304,7 +304,7 @@ Alpine.store('tooltip', {
 
         const div = document.createElement('div');
         div.className = 'fixed bg-base-200 rounded shadow-[0px_0px_15px_0px_rgba(0,_0,_0,_0.7)] max-w-lg text-sm pointer-events-auto';
-        div.style.cssText = 'position: fixed; display: none; user-select: none;';
+        div.style.cssText = 'position: fixed; display: none; user-select: none; z-index: 9999;';
         div.innerHTML = `
             <div class="flex items-center justify-between px-2 h-6 cursor-move bg-base-300 rounded-t text-base-content/40 text-xs select-none" data-drag-handle>
                 <span class="tracking-widest">-</span>

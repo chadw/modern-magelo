@@ -10,8 +10,8 @@ use App\Models\Spell;
 use App\Models\Zone;
 use App\Services\CharacterAa;
 use App\Services\CharacterFlags;
-use App\Services\StatCalculation;
 use App\Services\CharacterMain;
+use App\Services\StatCalculation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -59,6 +59,7 @@ class CharacterController extends Controller
                 'sharedbank',
                 'account',
                 'inventory',
+                'altCurrency.altCurrency.item',
             ])
             ->firstOrFail();
 

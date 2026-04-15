@@ -23,8 +23,8 @@
     @vite(['resources/js/app.js'])
     <div x-data x-show="$store.tooltipz.visible" x-html="$store.tooltipz.content" x-ref="tooltipz" x-transition x-cloak
         id="global-tooltip-normal"
-        class="fixed z-50 bg-base-200 rounded shadow-[0px_0px_15px_0px_rgba(0,_0,_0,_0.7)] max-w-lg text-sm pointer-events-none"
-        style="position: absolute; display: none; top: 0; left: 0">
+        class="fixed bg-base-200 rounded shadow-[0px_0px_15px_0px_rgba(0,_0,_0,_0.7)] max-w-lg text-sm pointer-events-none"
+        style="position: absolute; display: none; top: 0; left: 0; z-index: 9999;">
     </div>
 </body>
 </html>

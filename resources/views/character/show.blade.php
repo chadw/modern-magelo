@@ -44,6 +44,47 @@
                         'copper' => $character->currency->copper,
                     ]
                 ])
+                @if ($character->anon === 0)
+                    <div class="relative bg-base-100 overflow-visible">
+                        <div class="dropdown dropdown-end">
+                            <div tabindex="0"
+                                class="ml-2 inline-flex items-center gap-2 btn btn-sm btn-soft">
+                                Alt Currency
+                                <span class="badge badge-sm badge-soft badge-accent">{{ $character->altCurrency->count() }}</span>
+                            </div>
+                            <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-sm max-h-80 overflow-y-auto overflow-x-hidden flex-nowrap">
+                                @if ($character->altCurrency->isNotEmpty())
+                                    @foreach ($character->altCurrency as $alt)
+                                        <li class="px-0">
+                                            <div class="flex items-center gap-3 py-1 px-2">
+                                                <div class="text-sm">
+                                                    @if (optional($alt->altCurrency)->item)
+                                                        <x-item-link-normal
+                                                            :item_id="optional($alt->altCurrency->item)->id"
+                                                            :item_name="optional($alt->altCurrency->item)->Name"
+                                                            :item_icon="optional($alt->altCurrency->item)->icon"
+                                                            item_class="flex items-center"
+                                                        />
+                                                    @else
+                                                        <span class="text-sm">{{ $alt->alternate_currency_id }}</span>
+                                                    @endif
+                                                </div>
+                                                <div class="flex-1 border-b border-dotted border-base-content/20"></div>
+                                                <div class="font-medium">{{ $alt->amount ?? 0 }}</div>
+                                            </div>
+                                        </li>
+                                    @endforeach
+                                @else
+                                    <li class="px-2 text-sm text-base-content/50">No alt currency</li>
+                                @endif
+                            </ul>
+                        </div>
+                    </div>
+                @else
+                    <div class="ml-2 inline-flex items-center gap-2 btn btn-sm btn-soft">
+                        Alt Currency <span class="text-xs font-normal text-base-content/50">(Hidden)</span>
+                    </div>
+                @endif
             </div>
         </div>
         <div class="border-b border-base-content/10"></div>

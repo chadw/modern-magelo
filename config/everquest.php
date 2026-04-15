@@ -101,6 +101,8 @@ return [
         28 => 'Terror of Luclin',
         29 => 'Night of Shadows',
         30 => 'Laurion\'s Song',
+        31 => 'The Outer Brood',
+        32 => 'Shattering of Ro',
     ],
 
     // https://github.com/EQEmu/Server/blob/master/common/races.h
