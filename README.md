@@ -48,6 +48,18 @@ Now run migrations. This will populate your allaclone db with tables used for se
 php artisan migrate
 ```
 
+In /config/everquest.php there is some variables you may need to change. Currently only the item_links will work but it's best if you change them all.
+```
+'item_links'                => 'https://www.lazaruseq.com/alla/items/{item_id}',
+'spell_links'               => 'https://www.lazaruseq.com/alla/spells/{spell_id}',
+'faction_links'             => 'https://www.lazaruseq.com/alla/factions/{faction_id}',
+```
+
+If you have players who scrape data from the old magelo, and want to allow a friendly way to get the bazaar data, you can setup an api_key for them.
+```
+php artisan api:generate-key "Korwar's Key" (should be a friendly name so you can reference it if needed)
+```
+
 ### To set this up in production
 Copy over your magelo db and run the following command on your production server
 ```
