@@ -1,0 +1,352 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source "../**/*.blade.php";
+@source "../**/*.js";
+@source "../**/*.vue";
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+@plugin "daisyui" {
+    themes: light, dark --prefersdark;
+}
+
+@plugin 'tailwind-scrollbar' {
+    /* nocompatible: true;
+    preferredStrategy: 'pseudoelements'; */
+}
+
+[x-cloak] { display: none !important; }
+.text-heroic-stat { color: #d6b429; }
+
+/* Inventory search highlight */
+[data-inv-highlight="item"] {
+    outline: 2px solid #facc15;
+    outline-offset: -1px;
+    border-radius: 2px;
+    animation: inv-pulse 1.5s ease-in-out infinite;
+}
+[data-inv-highlight="bag"] {
+    outline: 2px solid #38bdf8;
+    outline-offset: -1px;
+    border-radius: 2px;
+    animation: inv-pulse 1.5s ease-in-out infinite;
+}
+@keyframes inv-pulse {
+    0%, 100% { outline-color: inherit; }
+    50% { outline-color: transparent; }
+}
+
+/*
+ * Prevent DaisyUI tab-content from creating a stacking context
+ * that traps position:fixed tooltips and bag windows.
+ */
+.tab-content {
+    isolation: auto !important;
+    transform: none !important;
+    will-change: auto !important;
+    contain: none !important;
+    filter: none !important;
+    perspective: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    overflow: visible !important;
+}
+.dropdown:hover .chevron {
+    transform: rotate(180deg);
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.floating-label {
+    &:focus-within,
+    &:not(:has(input:placeholder-shown, textarea:placeholder-shown)) {
+        > span {
+            @apply bg-base-200 text-accent font-bold scale-[0.9];
+        }
+    }
+}
+
+@layer components {
+    .table-zebra tbody tr:nth-child(odd) {
+        @apply bg-base-100;
+    }
+}
+
+/*
+** class
+*/
+.eqcls-sprite {
+  background: url('/resources/img/eq_classes.jpg') no-repeat 0 0;
+  height: 40px;
+}
+
+.eqcls-sprite.bard {
+  background-position: 0;
+  width: 40px;
+}
+
+.eqcls-sprite.beastlord {
+  background-position: -40px;
+  width: 40px;
+}
+
+.eqcls-sprite.berserker {
+  background-position: -600px;
+  width: 40px;
+}
+
+.eqcls-sprite.cleric {
+  background-position: -80px;
+  width: 40px;
+}
+
+.eqcls-sprite.druid {
+  background-position: -120px;
+  width: 40px;
+}
+
+.eqcls-sprite.enchanter {
+  background-position: -160px;
+  width: 40px;
+}
+
+.eqcls-sprite.magician {
+  background-position: -200px;
+  width: 40px;
+}
+
+.eqcls-sprite.monk {
+  background-position: -240px;
+  width: 40px;
+}
+
+.eqcls-sprite.necromancer {
+  background-position: -280px;
+  width: 40px;
+}
+
+.eqcls-sprite.paladin {
+  background-position: -320px;
+  width: 40px;
+}
+
+.eqcls-sprite.ranger {
+  background-position: -360px;
+  width: 40px;
+}
+
+.eqcls-sprite.rogue {
+  background-position: -400px;
+  width: 40px;
+}
+
+.eqcls-sprite.shadowknight {
+  background-position: -440px;
+  width: 40px;
+}
+
+.eqcls-sprite.shaman {
+  background-position: -480px;
+  width: 40px;
+}
+
+.eqcls-sprite.warrior {
+  background-position: -520px;
+  width: 40px;
+}
+
+.eqcls-sprite.wizard {
+  background-position: -560px;
+  width: 40px;
+}
+
+/*
+* inventory slots
+* https://docs.eqemu.io/server/inventory/inventory-slots/#general-slots-personal
+*/
+.invslot.slot0 { /* charm */
+    top: 221px;
+    left: 89px;
+}
+
+.invslot.slot1 { /* left ear */
+    top: 1px;
+    left: 1px;
+}
+
+.invslot.slot2 { /* head */
+    top: 1px;
+    left: 45px;
+}
+
+.invslot.slot3 { /* face */
+    top: 1px;
+    left: 89px;
+}
+
+.invslot.slot4 { /* right ear */
+    top: 1px;
+    left: 133px;
+}
+
+.invslot.slot5 { /* neck */
+    top: 45px;
+    left: 133px;
+}
+
+.invslot.slot6 { /* shoulder */
+    top: 133px;
+    left: 133px;
+}
+
+.invslot.slot7 { /* arms */
+    top: 89px;
+    left: 1px;
+}
+
+.invslot.slot8 { /* back */
+    top: 89px;
+    left: 133px;
+}
+
+.invslot.slot9 { /* left bracer */
+    top: 177px;
+    left: 1px;
+}
+
+.invslot.slot10 { /* right bracer */
+    top: 177px;
+    left: 133px;
+}
+
+.invslot.slot11 { /* range */
+    top: 309px;
+    left: 89px;
+}
+
+.invslot.slot12 { /* hands */
+    top: 221px;
+    left: 45px;
+}
+
+.invslot.slot13 { /* primary */
+    top: 309px;
+    left: 1px;
+}
+
+.invslot.slot14 { /* secondary */
+    top: 309px;
+    left: 45px;
+}
+
+.invslot.slot15 { /* left ring */
+    top: 265px;
+    left: 45px;
+}
+
+.invslot.slot16 { /* right ring */
+    top: 265px;
+    left: 89px;
+}
+
+.invslot.slot17 { /* chest */
+    top: 45px;
+    left: 1px;
+}
+
+.invslot.slot18 { /* legs */
+    top: 221px;
+    left: 1px;
+}
+
+.invslot.slot19 { /* feet */
+    top: 221px;
+    left: 133px;
+}
+
+.invslot.slot20 { /* waist */
+    top: 133px;
+    left: 1px;
+}
+
+.invslot.slot21 { /* powersource */
+    top: 265px;
+    left: 133px;
+}
+
+.invslot.slot22 { /* ammo */
+    top: 309px;
+    left: 133px;
+}
+
+.invslot.slot23 {
+    top: 1px;
+    left: 1px;
+}
+
+.invslot.slot24 {
+    top: 1px;
+    left: 45px;
+}
+
+.invslot.slot25 {
+    top: 45px;
+    left: 1px;
+}
+
+.invslot.slot26 {
+    top: 45px;
+    left: 45px;
+}
+
+.invslot.slot27 {
+    top: 89px;
+    left: 1px;
+}
+
+.invslot.slot28 {
+    top: 89px;
+    left: 45px;
+}
+
+.invslot.slot29 {
+    top: 133px;
+    left: 1px;
+}
+
+.invslot.slot30 {
+    top: 133px;
+    left: 45px;
+}
+
+.invslot.slot31 {
+    top: 177px;
+    left: 1px;
+}
+
+.invslot.slot32 {
+    top: 177px;
+    left: 45px;
+}
