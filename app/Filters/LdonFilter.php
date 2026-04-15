@@ -33,6 +33,7 @@ class LdonFilter
             ->selectRaw("
                 character_data.id,
                 character_data.name,
+                character_data.deleted_at,
                 guilds.id as guild_id,
                 guilds.name as guild_name,
                 IFNULL({$this->success}, 0) as success,
@@ -48,7 +49,8 @@ class LdonFilter
 
         $builder = CharacterData::query()->fromSub($rankedQuery, 'final')
             ->select('*')
-            ->where('rank', '<=', 100);
+            ->where('rank', '<=', 100)
+            ->whereNull('deleted_at');
 
         foreach ($this->filters as $filter) {
             if (method_exists($this, $filter) && $this->request->filled($filter)) {
