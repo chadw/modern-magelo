@@ -37,7 +37,7 @@
                             <td>{{ number_format($buyer->item_price / 1000, 0) }} pp</td>
                             <td class="text-right">
                                 <a href="{{ route('character.show', strtolower($buyer->character->name)) }}"
-                                    class="link-info link-hover">
+                                    class="text-base link-info link-hover">
                                     {{ $buyer->character->name ?? 'Unknown' }}
                                 </a>
                             </td>
