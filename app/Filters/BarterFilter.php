@@ -35,7 +35,7 @@ class BarterFilter
 
     protected function name($value)
     {
-        $this->builder->where('Name', 'like', "%{$value}%");
+        $this->builder->where('items.Name', 'like', "%{$value}%");
     }
 
     protected function buyer($value)
