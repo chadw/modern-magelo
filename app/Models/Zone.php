@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
@@ -19,5 +20,18 @@ class Zone extends Model
             ->orderBy('long_name', 'asc')
             ->get()
             ->groupBy('expansion');
+    }
+
+    public static function resolveZone(int $zoneid, ?int $version = null): Builder
+    {
+        $query = self::where('zoneidnumber', $zoneid);
+
+        if ($version !== null) {
+            $query->where('version', $version);
+        } else {
+            $query->orderBy('version');
+        }
+
+        return $query;
     }
 }

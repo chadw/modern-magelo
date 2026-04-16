@@ -54,7 +54,7 @@
                     ]
                 ])
                 @if ($character->anon === 0)
-                    <div class="relative bg-base-100 overflow-visible">
+                    <div class="relative overflow-visible">
                         <div class="dropdown dropdown-end">
                             <div tabindex="0"
                                 class="ml-2 inline-flex items-center gap-2 btn btn-sm btn-soft">

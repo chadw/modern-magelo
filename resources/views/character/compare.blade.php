@@ -3,7 +3,15 @@
 
 @section('content')
     <div class="mb-4">
-        <h2 class="text-2xl font-bold">{{ $left->name }} vs {{ $right->name }}</h2>
+        <h2 class="text-2xl font-bold">
+            <a href="{{ route('character.show', strtolower($left->name)) }}" class="link-accent link-hover">
+                {{ $left->name }}
+            </a>
+            <span class="mx-2">vs</span>
+            <a href="{{ route('character.show', strtolower($right->name)) }}" class="link-accent link-hover">
+                {{ $right->name }}
+            </a>
+        </h2>
         <div class="text-sm text-base-content/50">Comparing equipped items and augments</div>
     </div>
 

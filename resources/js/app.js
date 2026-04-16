@@ -247,6 +247,16 @@ Alpine.data('compare', (name = '') => ({
     }
 }));
 
+Alpine.data('charMover', () => ({
+    rows: [{ login: '', character: '', zone_id: null }],
+    addRow() {
+        this.rows.push({ login: '', character: '', zone_id: this.rows[0]?.zone_id ?? null });
+    },
+    removeRow(i) {
+        this.rows.splice(i, 1);
+    }
+}));
+
 Alpine.store('tooltipz', {
     content: '',
     visible: false,

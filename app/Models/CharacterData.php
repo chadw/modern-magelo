@@ -3,18 +3,34 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Support\Collection;
 
 class CharacterData extends Model
 {
     protected $connection = 'eqemu';
     protected $table = 'character_data';
+    public $timestamps = false;
+
+    protected $fillable = [
+        'zone_id',
+        'zone_instance',
+        'x',
+        'y',
+        'z',
+        'heading',
+    ];
 
     public function getRouteKeyName()
     {
         return 'name';
+    }
+
+    public function zone(): BelongsTo
+    {
+        return $this->belongsTo(Zone::class, 'zone_id', 'zoneidnumber')
+            ->select('zoneidnumber', 'short_name');
     }
 
     public function skills(): HasMany

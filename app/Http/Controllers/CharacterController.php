@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Account;
 use App\Models\BaseData;
 use App\Models\CharacterData;
 use App\Models\FactionAssociation;
@@ -64,6 +65,7 @@ class CharacterController extends Controller
             ->firstOrFail();
 
         $char->data_buckets_by_key = $char->getDataBucketsByKey()->get()->keyBy('key');
+
         $flags = new CharacterFlags($char);
 
         // get character guild
@@ -123,5 +125,60 @@ class CharacterController extends Controller
             'factions' => $factions,
             'flags' => $flags,
         ]);
+    }
+
+    public function move(Request $request, CharacterData $character)
+    {
+        $rules = [
+            'zone_id' => ['required', 'exists:eqemu.zone,zoneidnumber'],
+            'login' => ['required', 'string'],
+        ];
+
+        $data = $request->validate($rules);
+
+        $account = Account::where('name', $data['login'] ?? null)->first();
+        if (!$account || $account->id != $character->account_id) {
+            return redirect()->back()->with('error', 'Login does not match character account');
+        }
+
+        $allowed = (array) config('everquest.char_mover_zones', []);
+        if (!empty($allowed)) {
+            $allowedZoneIds = array_map('intval', array_keys($allowed));
+        } else {
+            $allowedZoneIds = [152, 202];
+        }
+
+        if (!in_array((int) ($data['zone_id'] ?? 0), $allowedZoneIds, true)) {
+            return redirect()->back()->with('error', 'Invalid zone selection');
+        }
+
+        if (isset($data['zone_id'])) {
+            $zone = Zone::resolveZone((int) $data['zone_id'])->first([
+                'zoneidnumber',
+                'short_name',
+                'safe_x',
+                'safe_y',
+                'safe_z',
+                'safe_heading'
+            ]);
+
+            $oldZoneShort = optional($character->zone)->short_name ?? $character->zone_id;
+            $newZoneShort = $zone->short_name ?? $data['zone_id'];
+
+            $character->update([
+                'zone_id' => $data['zone_id'],
+                'zone_instance' => 0,
+                'x' => $zone->safe_x ?? $character->x ?? 0,
+                'y' => $zone->safe_y ?? $character->y ?? 0,
+                'z' => $zone->safe_z ?? $character->z ?? 0,
+                'heading' => $zone->safe_heading ?? $character->heading ?? 0,
+            ]);
+
+            $msg = "Character moved from zone {$oldZoneShort} to {$newZoneShort}";
+
+            return redirect()->back()->with('success', $msg);
+        }
+
+        return redirect()->back()->with('error', 'No action taken');
     }
 }

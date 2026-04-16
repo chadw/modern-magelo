@@ -15,6 +15,22 @@
             <div class="flex flex-col min-w-0 break-words bg-base-200 w-full mb-6 rounded-lg min-h-lvh">
                 <div class="p-10 h-full">
                     <x-h1>@yield('title')</x-h1>
+
+                    @if(session('success'))
+                        <div class="mb-6">
+                            <x-ui.alert-success>
+                                {{ session('success') }}
+                            </x-ui.alert-success>
+                        </div>
+                    @endif
+                    @if(session('error'))
+                        <div class="mb-6">
+                            <x-ui.alert-error>
+                                {{ session('error') }}
+                            </x-ui.alert-error>
+                        </div>
+                    @endif
+
                     @yield('content')
                 </div>
             </div>

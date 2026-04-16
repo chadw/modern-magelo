@@ -82,6 +82,40 @@
                     </div>
                 </div>
             </div>
+
+            <div class="bg-base-300 shadow-md border border-base-content/10 rounded-lg p-4">
+                <div class="mb-3">
+                    <h3 class="text-sm font-bold">Character Mover</h3>
+                    <p class="text-xs text-base-content/50">Enter account login and select destination zone</p>
+                </div>
+                <form method="POST" action="{{ route('character.move', $character) }}">
+                    @csrf
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 items-end">
+                        <div>
+                            <label for="login" class="floating-label">
+                                <span>Login</span>
+                                <input name="login" id="login" type="text" placeholder="Login" value="{{ old('login') }}" class="input w-full" required />
+                            </label>
+                        </div>
+                        <div>
+                            <label for="zone" class="floating-label">
+                                <span>Zone</span>
+                                <select name="zone_id" id="zone" class="select w-full">
+                                    @forelse (config('everquest.char_mover_zones') as $k => $v)
+                                        <option value="{{ $k }}">{{ $v }}</option>
+                                    @empty
+                                        <option value="152">Nexus</option>
+                                        <option value="202">Plane of Knowledge</option>
+                                    @endforelse
+                                </select>
+                            </label>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-soft btn-accent">Move</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
 
         <div class="space-y-4 min-w-0">

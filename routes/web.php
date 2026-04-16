@@ -1,15 +1,16 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ItemController;
-use App\Http\Controllers\LdonController;
-use App\Http\Controllers\GuildController;
-use App\Http\Controllers\SpellController;
 use App\Http\Controllers\BarterController;
 use App\Http\Controllers\BazaarController;
-use App\Http\Controllers\SearchController;
-use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\CharacterCompareController;
+use App\Http\Controllers\CharacterController;
+use App\Http\Controllers\CharacterMoverController;
+use App\Http\Controllers\GuildController;
+use App\Http\Controllers\ItemController;
+use App\Http\Controllers\LdonController;
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\SpellController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
@@ -21,6 +22,9 @@ Route::get('/search', [SearchController::class, 'index'])->name('search.results'
 
 Route::get('/guild/{guild}', [GuildController::class, 'show'])->name('guild.show');
 Route::get('/character/compare', [CharacterCompareController::class, 'index'])->name('character.compare');
+Route::post('/character/{character}/move', [CharacterController::class, 'move'])->name('character.move');
+Route::get('/char-mover', [CharacterMoverController::class, 'index'])->name('char.mover.index');
+Route::post('/char-mover', [CharacterMoverController::class, 'store'])->name('char.mover.store');
 Route::get('/character/{character}', [CharacterController::class, 'show'])->name('character.show');
 Route::get('/bazaar', [BazaarController::class, 'index'])->name('bazaar.index');
 Route::get('/barter', [BarterController::class, 'index'])->name('barter.index');
