@@ -4,6 +4,8 @@
     if (array_filter($augs)) {
         $popupUrl .= '?' . http_build_query(['augs' => implode(',', $augs)]);
     }
+
+    $iconSizeClass = $size === 'sm' ? 'item-icon-sm' : '';
 @endphp
 
 <div
@@ -21,7 +23,7 @@
         title="{{ $itemName }}">
 
         @if (isset($itemIcon))
-            <img draggable="false" src="{{ asset('img/icons/' . $itemIcon . '.png') }}" alt="{{ $itemName }}" />
+            <span draggable="false" class="item-icon item-{{ $itemIcon }} {{ $iconSizeClass }}" aria-hidden="true"></span>
         @endif
     </a>
 </div>

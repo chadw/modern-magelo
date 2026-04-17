@@ -18,7 +18,7 @@ class Item extends Model
     public function wornEffectSpell(): BelongsTo
     {
         return $this->belongsTo(Spell::class, 'worneffect', 'id')
-            ->select('id', 'name', 'new_icon');
+            ->select('id', 'name', 'new_icon', 'targettype');
     }
 
     public function focusEffectSpell(): BelongsTo

@@ -14,8 +14,17 @@ class ItemLink extends Component
     public string $itemClass;
     public string $instance;
     public array $augs;
+    public string $size;
 
-    public function __construct(int $itemId, string $itemName, $itemIcon = null, string $itemClass = '', string $instance = '', array $augs = [])
+    public function __construct(
+        int $itemId,
+        string $itemName,
+        $itemIcon = null,
+        string $itemClass = '',
+        string $instance = '',
+        array $augs = [],
+        string $size = 'md',
+    )
     {
         $this->itemId = $itemId;
         $this->itemName = $itemName;
@@ -23,6 +32,7 @@ class ItemLink extends Component
         $this->itemClass = $itemClass;
         $this->instance = $instance;
         $this->augs = $augs;
+        $this->size = $size;
     }
 
     public function render(): View|Closure|string

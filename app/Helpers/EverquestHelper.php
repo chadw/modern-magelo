@@ -1,5 +1,4 @@
 <?php
-use Illuminate\Support\Str;
 
 if (!function_exists('tooltip_uid')) {
     function tooltip_uid(): string
@@ -57,17 +56,6 @@ if (!function_exists('eq_skills')) {
 if (!function_exists('eq_aa_types')) {
     function eq_aa_types() {
         return config('everquest.aa_types');
-    }
-}
-
-if (!function_exists('item_icon')) {
-    function item_icon($icon_id, $size = 40) {
-        //global $icons_dir, $icons_url;
-        if (file_exists(public_path('img/icons/' . $icon_id . '.png'))) {
-            return '<img src="' . asset('img/icons/' . $icon_id . '.png') . '" class="w-10 h-auto ml-4" />';
-        }
-
-        return;
     }
 }
 
@@ -350,6 +338,78 @@ if (!function_exists('ucRomanNumeral')) {
 
             return $matches[0];
         }, $string);
+    }
+}
+
+// https://github.com/Akkadius/spire/blob/07f745962011a257227b3108590460f9d042cdb6/frontend/src/app/spells.ts#L2875
+if (!function_exists('getBuffDuration')) {
+    function getBuffDuration($spell)
+    {
+        $i = 0;
+        $minLevel = getMinLevel($spell);
+        $buffDuration = (int) $spell['buffduration'];
+        $buffDurationFormula = (int) $spell->buffdurationformula;
+
+        switch ($buffDurationFormula) {
+            case 0:
+                return 0;
+            case 1:
+                $i = ceil($minLevel / 2);
+                return ($i < $buffDuration ? ($i < 1 ? 1 : $i) : $buffDuration);
+            case 2:
+                $i = ceil($buffDuration / 5 * 3);
+                return ($i < $buffDuration ? ($i < 1 ? 1 : $i) : $buffDuration);
+            case 3:
+                $i = $minLevel * 30;
+                return ($i < $buffDuration ? ($i < 1 ? 1 : $i) : $buffDuration);
+            case 4:
+                return $buffDuration;
+            case 5:
+                $i = $buffDuration;
+                return ($i < 3 ? ($i < 1 ? 1 : $i) : 3);
+            case 6:
+                $i = ceil($minLevel / 2);
+                return ($i < $buffDuration ? ($i < 1 ? 1 : $i) : $buffDuration);
+            case 7:
+                $i = $minLevel;
+                return ($i < $buffDuration ? ($i < 1 ? 1 : $i) : $buffDuration);
+            case 8:
+                $i = $minLevel + 10;
+                return ($i < $buffDuration ? ($i < 1 ? 1 : $i) : $buffDuration);
+            case 9:
+                $i = $minLevel * 2 + 10;
+                return ($i < $buffDuration ? ($i < 1 ? 1 : $i) : $buffDuration);
+            case 10:
+                $i = $minLevel * 3 + 10;
+                return ($i < $buffDuration ? ($i < 1 ? 1 : $i) : $buffDuration);
+            case 11:
+            case 12:
+                return $buffDuration;
+            case 50:
+                return 72000;
+            case 3600:
+                return ($buffDuration ? $buffDuration : 3600);
+            default:
+                //return "???";
+                return 0;
+        }
+    }
+}
+
+if (!function_exists('getMinLevel')) {
+    function getMinLevel($spell)
+    {
+        $minLevel = 255;
+        for ($i = 1; $i <= 16; $i++) {
+            $classIndex = "classes" . $i;
+            if (($spell[$classIndex] > 0) && ($spell[$classIndex] < 255)) {
+                if ($spell[$classIndex] < $minLevel) {
+                    $minLevel = $spell[$classIndex];
+                }
+            }
+        }
+
+        return intval($minLevel);
     }
 }
 

@@ -59,7 +59,7 @@
                 {{ $item->Name }}
             </a>
         </h1>
-        <img src="{{ asset('img/icons/' . $item->icon . '.png') }}" alt="{{ $item->Name }}" class="w-10 h-auto ml-4" />
+        <div class="w-10 h-auto ml-4 item-icon item-{{ $item->icon }}"></div>
     </div>
 
     <div class="mt-2 space-y-1 text-sm text-gray-300">
@@ -247,12 +247,13 @@
                     <div class="flex items-start gap-2 whitespace-nowrap">
                         @if ($aug)
                             @php $augTtid = tooltip_uid(); @endphp
-                            <div class="w-6 h-6 flex-shrink-0 border-1 border-base-content/20">
+                            <div class="w-6 h-6 flex-shrink-0 border-1 border-base-content/20 flex items-center justify-center">
                                 <x-item-link
                                     :item_id="$aug->id"
                                     :item_name="$aug->Name"
                                     :item_icon="$aug->icon"
                                     item_class="inline-flex"
+                                    size="sm"
                                     :instance="$augTtid"
                                 />
                             </div>

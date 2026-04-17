@@ -24,10 +24,10 @@
 <div class="w-full p-4 bg-base-200 rounded-lg">
     <div class="flex justify-between items-start">
         <h1 class="text-2xl font-bold">{{ $spell->name }}</h1>
-        <img src="{{ asset('img/icons/' . $spell->new_icon . '.png') }}" alt="{{ $spell->name }}"
-            class="w-10 h-auto ml-4" />
+        <div
+            class="ml-2 spell-icon spell-{{ $spell->new_icon }} rounded-lg {{ config('everquest.spell_target_colors.' . $spell->targettype, '') }}">
+        </div>
     </div>
-
     <div class="mt-2 space-y-1">
         <dl class="divide-y divide-gray-800">
             @if ($effectsOnly === false)

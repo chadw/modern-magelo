@@ -10,8 +10,6 @@ You can see this in use on [Project Lazarus](https://magelo.lazaruseq.com/)
 
 ## Installation
 
-[Download the item/spell icons!](https://github.com/chadw/modern-allaclone/releases/download/1.0.0/icons.zip) and unzip them to /public/img/icons
-
 ### To setup a local development environment
 ```
 git clone https://github.com/chadw/modern-magelo.git

@@ -1,22 +1,29 @@
-<div x-data class="{{ $spellClass }}">
-    <a href="/spells/show/{{ $spellId }}"
-        @mouseenter="$store.tooltip.loadTooltip('{{ route('spells.popup', $spellId) }}', $el, $event)"
-        @mouseleave="$store.tooltip.hideTooltip()" class="link-info link-hover flex items-center gap-1"
+@php
+    $spellTargetType = $spellTargetType ?? null;
+
+    $template = config('everquest.spell_links');
+    $href = $template ? str_replace('{spell_id}', $spellId, $template) : '#';
+    $hasHref = $href && $href !== '#';
+@endphp
+
+<div x-data class="{{ $spellClass }}" data-target-type="{{ $spellTargetType ?? '' }}">
+    <a @if(!$hasHref) href="#" @click.prevent @else href="{{ $href }}" target="_blank" rel="noopener" @endif
+        @mouseenter="$store.tooltipz.loadTooltip('{{ route('spells.popup', $spellId) }}', $el, $event)"
+        @mouseleave="$store.tooltipz.hideTooltip()"
+        class="link-info link-hover flex items-center gap-1"
         title="{{ $spellName }}"
         data-effects-only="{{ $effectsOnly ? '1' : '0' }}"
         >
         @if ($spellIcon)
-            <img src="{{ asset('img/icons/' . $spellIcon . '.png') }}" alt="{{ $spellName }}" width="20"
-                height="20" class="mr-1">
+            <span class="icon-wrap" aria-hidden="true">
+                <span class="spell-icon spell-{{ $spellIcon }} spell-icon-sm rounded-lg {{ config('everquest.spell_target_colors.' . $spellTargetType, '') }}"></span>
+            </span>
         @endif
-        {{ $spellName }}
-        <template x-if="$store.tooltip.loadingUrl === '{{ route('spells.popup', $spellId) }}'">
-            <svg class="animate-spin h-3 w-3 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none"
-                viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
-                </circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z"></path>
-            </svg>
+        <span class="whitespace-nowrap">
+            {{ $spellName }}
+        </span>
+        <template x-if="$store.tooltipz.loadingUrl === '{{ route('spells.popup', $spellId) }}'">
+            <span class="loading loading-spinner loading-xs text-gray-400"></span>
         </template>
     </a>
 </div>
