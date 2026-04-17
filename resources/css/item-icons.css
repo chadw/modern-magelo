@@ -6,12 +6,9 @@
     display: inline-block;
 }
 
-/* small icon: zoom shrinks both visual + layout box, so a 40px sprite
-   becomes a real 20×20 element. Works perfectly with spritesheets. */
 .item-icon-sm {
     zoom: 0.5;
 }
-
 
 .item-1000 {background-position: -0px -0px;}
 .item-10000 {background-position: -40px -0px;}

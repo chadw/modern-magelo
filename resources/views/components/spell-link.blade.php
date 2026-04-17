@@ -4,6 +4,9 @@
     $template = config('everquest.spell_links');
     $href = $template ? str_replace('{spell_id}', $spellId, $template) : '#';
     $hasHref = $href && $href !== '#';
+
+    $size = $size ?? 'md';
+    $iconSizeClass = $size === 'sm' ? 'item-icon-sm' : '';
 @endphp
 
 <div x-data class="{{ $spellClass }}" data-target-type="{{ $spellTargetType ?? '' }}">
@@ -15,9 +18,7 @@
         data-effects-only="{{ $effectsOnly ? '1' : '0' }}"
         >
         @if ($spellIcon)
-            <span class="icon-wrap" aria-hidden="true">
-                <span class="spell-icon spell-{{ $spellIcon }} spell-icon-sm rounded-lg {{ config('everquest.spell_target_colors.' . $spellTargetType, '') }}"></span>
-            </span>
+            <span class="spell-icon spell-{{ $spellIcon }} {{ $iconSizeClass }} rounded-lg {{ config('everquest.spell_target_colors.' . $spellTargetType, '') }}"></span>
         @endif
         <span class="whitespace-nowrap">
             {{ $spellName }}

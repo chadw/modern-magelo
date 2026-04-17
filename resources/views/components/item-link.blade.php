@@ -5,6 +5,7 @@
         $popupUrl .= '?' . http_build_query(['augs' => implode(',', $augs)]);
     }
 
+    $size = $size ?? 'md';
     $iconSizeClass = $size === 'sm' ? 'item-icon-sm' : '';
 @endphp
 

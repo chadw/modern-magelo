@@ -7,16 +7,7 @@
 }
 
 .spell-icon-sm {
-    transform: scale(0.7);
-    transform-origin: center;
-}
-
-.icon-wrap {
-    flex-shrink: 0;
-    height: 20px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    zoom: 0.5;
 }
 
 .spell-0 {background-position: -0px -0px;}
