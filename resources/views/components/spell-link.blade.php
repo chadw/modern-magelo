@@ -6,7 +6,7 @@
     $hasHref = $href && $href !== '#';
 
     $size = $size ?? 'md';
-    $iconSizeClass = $size === 'sm' ? 'item-icon-sm' : '';
+    $iconSizeClass = $size === 'sm' ? 'spell-icon-sm' : '';
 @endphp
 
 <div x-data class="{{ $spellClass }}" data-target-type="{{ $spellTargetType ?? '' }}">
