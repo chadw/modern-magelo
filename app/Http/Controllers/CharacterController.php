@@ -44,7 +44,7 @@ class CharacterController extends Controller
 
         // get character and related data
         $char = CharacterData::where('name', $character->name)
-            ->where ('gm', 0)
+            ->where('gm', 0)
             ->with([
                 'skills',
                 'currency',
@@ -61,6 +61,7 @@ class CharacterController extends Controller
                 'account',
                 'inventory',
                 'altCurrency.altCurrency.item',
+                'tribute._tribute',
             ])
             ->firstOrFail();
 
@@ -97,21 +98,21 @@ class CharacterController extends Controller
 
         $factions = FactionAssociation::with([
             'factionList',
-            'factionList.classMod' => fn ($q) => $q->where('mod_name', 'c' . $char->class),
-            'factionList.raceMod' => fn ($q) => $q->where('mod_name', 'r' . $char->race),
-            'factionList.deityMod' => fn ($q) => $q->where('mod_name', 'd' . $char->deity),
+            'factionList.classMod' => fn($q) => $q->where('mod_name', 'c' . $char->class),
+            'factionList.raceMod' => fn($q) => $q->where('mod_name', 'r' . $char->race),
+            'factionList.deityMod' => fn($q) => $q->where('mod_name', 'd' . $char->deity),
         ])
-        ->get()
-        ->sortBy(fn ($faction) => $faction->factionList->name ?? '')
-        ->values()
-        ->each(function ($faction) use ($char) {
-            $v = $char->faction->firstWhere('faction_id', $faction->id);
-            $faction->cmod = $faction->factionList->classMod->mod ?? 0;
-            $faction->rmod = $faction->factionList->raceMod->mod ?? 0;
-            $faction->dmod = $faction->factionList->deityMod->mod ?? 0;
-            $faction->char_value = $v->current_value ?? 0;
-            $faction->total = ($faction->factionList->base + $faction->cmod + $faction->rmod + $faction->dmod);
-        });
+            ->get()
+            ->sortBy(fn($faction) => $faction->factionList->name ?? '')
+            ->values()
+            ->each(function ($faction) use ($char) {
+                $v = $char->faction->firstWhere('faction_id', $faction->id);
+                $faction->cmod = $faction->factionList->classMod->mod ?? 0;
+                $faction->rmod = $faction->factionList->raceMod->mod ?? 0;
+                $faction->dmod = $faction->factionList->deityMod->mod ?? 0;
+                $faction->char_value = $v->current_value ?? 0;
+                $faction->total = ($faction->factionList->base + $faction->cmod + $faction->rmod + $faction->dmod);
+            });
 
         return view('character.show', [
             'character' => $char,

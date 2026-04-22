@@ -119,6 +119,11 @@ class CharacterData extends Model
         return $this->hasOne(AdventureStat::class, 'player_id', 'id');
     }
 
+    public function tribute(): HasMany
+    {
+        return $this->hasMany(CharacterTribute::class, 'character_id');
+    }
+
     public function getDataBucketsByKey()
     {
         $char_id = $this->id;

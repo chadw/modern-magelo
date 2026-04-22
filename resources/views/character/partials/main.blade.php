@@ -83,6 +83,39 @@
                 </div>
             </div>
 
+            @if ($character->anon === 1)
+                <div class="bg-base-300 shadow-md border border-base-content/10 rounded-lg p-4">
+                    <div class="flex items-center mb-3 gap-2">
+                        <h3 class="text-sm font-bold">Tribute</h3>
+                    </div>
+                    <x-ui.alert-info>
+                        This character is set to Anonymous, so tribute is hidden.
+                    </x-ui.alert-info>
+                </div>
+            @else
+                @if ($character->tribute && $character->tribute->count())
+                    <div class="bg-base-300 shadow-md border border-base-content/10 rounded-lg p-4">
+                        <div class="flex items-center mb-3 gap-2">
+                            <h3 class="text-sm font-bold">Tribute</h3>
+                            <span class="badge badge-sm badge-soft badge-accent">{{ $character->tribute->count() }}</span>
+                        </div>
+                        @foreach ($character->tribute as $tribute)
+                            <div class="flex items-center gap-3 mt-2 p-2 rounded odd:bg-base-100 even:bg-base-200/50">
+                                <div class="text-sm font-bold">
+                                    {{ $tribute->_tribute?->name ?? 'Unknown' }}
+                                </div>
+                                <div class="flex-1 border-b border-dotted border-base-content/20"></div>
+                                <div class="font-medium text-xs font-mono">
+                                    {{ (int) ($tribute->tier ?? 0) + 1 }}
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <p class="text-muted mt-2">No tribute on record.</p>
+                @endif
+            @endif
+
             <div class="bg-base-300 shadow-md border border-base-content/10 rounded-lg p-4">
                 <div class="mb-3">
                     <h3 class="text-sm font-bold">Character Mover</h3>
