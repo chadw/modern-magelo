@@ -66,14 +66,20 @@
                             />
                         </td>
                         <td class="align-top">
-                            @if($leftAugs->pluck('id')->contains($aug->id))
+                            @php $count = $leftAugCounts[$aug->id] ?? 0; @endphp
+                            @if($count > 1)
+                                <span class="text-sm text-success">Owned ({{ $count }})</span>
+                            @elseif($count === 1)
                                 <span class="text-sm text-success">Owned</span>
                             @else
                                 <span class="text-sm text-error">Missing</span>
                             @endif
                         </td>
                         <td class="align-top">
-                            @if($rightAugs->pluck('id')->contains($aug->id))
+                            @php $count = $rightAugCounts[$aug->id] ?? 0; @endphp
+                            @if($count > 1)
+                                <span class="text-sm text-success">Owned ({{ $count }})</span>
+                            @elseif($count === 1)
                                 <span class="text-sm text-success">Owned</span>
                             @else
                                 <span class="text-sm text-error">Missing</span>

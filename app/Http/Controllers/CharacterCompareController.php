@@ -52,6 +52,29 @@ class CharacterCompareController extends Controller
             return $out;
         })->unique('id')->values();
 
+        // Count duplicates of the same augment per character (id => count)
+        $leftAugCounts = collect($leftItems['gear'])->flatMap(function ($inv) {
+            $out = collect();
+            for ($i = 1; $i <= 6; $i++) {
+                $aug = $inv->{'aug' . $i} ?? null;
+                if ($aug) $out->push($aug->id);
+            }
+            return $out;
+        })->countBy()->mapWithKeys(function ($count, $id) {
+            return [(int) $id => $count];
+        });
+
+        $rightAugCounts = collect($rightItems['gear'])->flatMap(function ($inv) {
+            $out = collect();
+            for ($i = 1; $i <= 6; $i++) {
+                $aug = $inv->{'aug' . $i} ?? null;
+                if ($aug) $out->push($aug->id);
+            }
+            return $out;
+        })->countBy()->mapWithKeys(function ($count, $id) {
+            return [(int) $id => $count];
+        });
+
         $augOrder = $leftAugs->concat($rightAugs)
             ->unique('id')
             ->sortBy('Name')
@@ -62,7 +85,7 @@ class CharacterCompareController extends Controller
 
         return view('character.compare', compact(
             'left', 'right', 'leftItems', 'rightItems', 'leftGear', 'rightGear', 'slots', 'slotLabels',
-            'leftAugs', 'rightAugs', 'augOrder'
+            'leftAugs', 'rightAugs', 'augOrder', 'leftAugCounts', 'rightAugCounts'
         ));
     }
 }
