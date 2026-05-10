@@ -19,7 +19,9 @@
                     <li><a href="{{ route('bazaar.index') }}" class="uppercase">Bazaar</a></li>
                     <li><a href="{{ route('barter.index') }}" class="uppercase">Barter</a></li>
                     <li><a href="{{ route('ldon.index') }}" class="uppercase">LDONs</a></li>
-                    <li><a href="{{ route('char.mover.index') }}" class="uppercase">Char Mover</a></li>
+                    @if (config('everquest.char_mover_enabled'))
+                        <li><a href="{{ route('char.mover.index') }}" class="uppercase">Char Mover</a></li>
+                    @endif
                 </ul>
             </div>
         </div>
@@ -38,7 +40,9 @@
             <a href="{{ route('bazaar.index') }}" class="btn btn-ghost uppercase {{ Route::is('bazaar.*') ? 'btn-active' : '' }}">Bazaar</a>
             <a href="{{ route('barter.index') }}" class="btn btn-ghost uppercase {{ Route::is('barter.*') ? 'btn-active' : '' }}">Barter</a>
             <a href="{{ route('ldon.index') }}" class="btn btn-ghost uppercase  {{ Route::is('ldon.*') ? 'btn-active' : '' }}">LDONs</a>
-            <a href="{{ route('char.mover.index') }}" class="btn btn-ghost uppercase  {{ Route::is('char.mover.*') ? 'btn-active' : '' }}">Char Mover</a>
+            @if (config('everquest.char_mover_enabled'))
+                <a href="{{ route('char.mover.index') }}" class="btn btn-ghost uppercase  {{ Route::is('char.mover.*') ? 'btn-active' : '' }}">Char Mover</a>
+            @endif
         </div>
 
     </div>

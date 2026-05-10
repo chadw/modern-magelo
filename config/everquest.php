@@ -24,6 +24,8 @@ return [
      * Character Mover Zones
      * zoneidnumber | short_name
      */
+    'char_mover_enabled' => true,
+
     'char_mover_zones' => [
         152 => 'Nexus',
         202 => 'Plane of Knowledge',

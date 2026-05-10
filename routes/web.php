@@ -22,9 +22,11 @@ Route::get('/search', [SearchController::class, 'index'])->name('search.results'
 
 Route::get('/guild/{guild}', [GuildController::class, 'show'])->name('guild.show');
 Route::get('/character/compare', [CharacterCompareController::class, 'index'])->name('character.compare');
-Route::post('/character/{character}/move', [CharacterController::class, 'move'])->name('character.move');
-Route::get('/char-mover', [CharacterMoverController::class, 'index'])->name('char.mover.index');
-Route::post('/char-mover', [CharacterMoverController::class, 'store'])->name('char.mover.store');
+if (config('everquest.char_mover_enabled')) {
+    Route::post('/character/{character}/move', [CharacterController::class, 'move'])->name('character.move');
+    Route::get('/char-mover', [CharacterMoverController::class, 'index'])->name('char.mover.index');
+    Route::post('/char-mover', [CharacterMoverController::class, 'store'])->name('char.mover.store');
+}
 Route::get('/character/{character}', [CharacterController::class, 'show'])->name('character.show');
 Route::get('/bazaar', [BazaarController::class, 'index'])->name('bazaar.index');
 Route::get('/barter', [BarterController::class, 'index'])->name('barter.index');
