@@ -30,6 +30,48 @@ Alpine.data('eqsearch', (initialQuery = '') => ({
     }
 }));
 
+Alpine.data('itemSuggest', (initial = '') => ({
+    query: initial,
+    items: [],
+    loading: false,
+    timer: null,
+
+    init() {
+        this.$watch('query', (val) => {
+            clearTimeout(this.timer);
+            if (!val || val.length < 2) {
+                this.items = [];
+                this.loading = false;
+                return;
+            }
+
+            this.timer = setTimeout(() => this.fetch(), 250);
+        });
+    },
+
+    async fetch() {
+        this.loading = true;
+        try {
+            const res = await fetch('/items/suggest?q=' + encodeURIComponent(this.query));
+            if (!res.ok) {
+                this.items = [];
+                return;
+            }
+            const data = await res.json();
+            this.items = data;
+        } catch (e) {
+            this.items = [];
+        } finally {
+            this.loading = false;
+        }
+    },
+
+    select(name) {
+        this.query = name;
+        this.items = [];
+    }
+}));
+
 let zCounter = 1000;
 Alpine.data('draggableBag', ({ id }) => ({
     visible: false,

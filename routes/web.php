@@ -10,6 +10,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\LdonController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SpellController;
+use App\Http\Controllers\TraderAuditController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -29,8 +30,10 @@ if (config('everquest.char_mover_enabled')) {
 }
 Route::get('/character/{character}', [CharacterController::class, 'show'])->name('character.show');
 Route::get('/bazaar', [BazaarController::class, 'index'])->name('bazaar.index');
+Route::get('/trader-history', [TraderAuditController::class, 'index'])->name('history.index');
 Route::get('/barter', [BarterController::class, 'index'])->name('barter.index');
 Route::get('/ldon', [LdonController::class, 'index'])->name('ldon.index');
 
 Route::get('/items/popup/{item}', [ItemController::class, 'popup'])->name('items.popup');
+Route::get('/items/suggest', [ItemController::class, 'suggest']);
 Route::get('/spells/popup/{spell}', [SpellController::class, 'popup'])->name('spells.popup');

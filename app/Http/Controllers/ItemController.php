@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use App\ViewModels\ItemViewModel;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Http\Request;
 
 class ItemController extends Controller
 {
@@ -35,5 +35,22 @@ class ItemController extends Controller
                 'augs' => $augs
             ])->render()
         ]);
+    }
+
+    public function suggest(Request $request)
+    {
+        $q = $request->query('q');
+
+        if (!is_string($q) || strlen($q) < 2) {
+            return response()->json([]);
+        }
+
+        $results = Item::where('Name', 'like', "%{$q}%")
+            ->groupBy('Name')
+            ->limit(50)
+            ->orderBy('Name')
+            ->pluck('Name');
+
+        return response()->json($results->values());
     }
 }

@@ -17,6 +17,7 @@
                 </label>
                 <ul tabindex="0" class="dropdown-content mt-3 z-[60] menu p-2 shadow bg-base-200 rounded-box w-52">
                     <li><a href="{{ route('bazaar.index') }}" class="uppercase">Bazaar</a></li>
+                    <li><a href="{{ route('history.index') }}" class="uppercase">Bazaar History</a></li>
                     <li><a href="{{ route('barter.index') }}" class="uppercase">Barter</a></li>
                     <li><a href="{{ route('ldon.index') }}" class="uppercase">LDONs</a></li>
                     @if (config('everquest.char_mover_enabled'))
@@ -38,6 +39,7 @@
 
         <div class="hidden xl:flex space-x-2 absolute left-5 top-1/2 -translate-y-1/2">
             <a href="{{ route('bazaar.index') }}" class="btn btn-ghost uppercase {{ Route::is('bazaar.*') ? 'btn-active' : '' }}">Bazaar</a>
+            <a href="{{ route('history.index') }}" class="btn btn-ghost uppercase {{ Route::is('history.*') ? 'btn-active' : '' }}">Bazaar History</a>
             <a href="{{ route('barter.index') }}" class="btn btn-ghost uppercase {{ Route::is('barter.*') ? 'btn-active' : '' }}">Barter</a>
             <a href="{{ route('ldon.index') }}" class="btn btn-ghost uppercase  {{ Route::is('ldon.*') ? 'btn-active' : '' }}">LDONs</a>
             @if (config('everquest.char_mover_enabled'))

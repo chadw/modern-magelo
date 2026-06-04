@@ -73,7 +73,7 @@ return [
     'slot_sharedbank_bag_end'   => 11409,
 
     'ignore_zones' => [
-        'load', 'loading', 'load2', 'nektropos', 'arttest', 'apprentice', 'tutorial', 'cshome',
+        'load', 'loading', 'load2', 'nektropos', 'arttest', 'apprentice', 'tutorial', 'cshome'
     ],
 
     /*
