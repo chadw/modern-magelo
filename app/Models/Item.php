@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Item extends Model
 {
@@ -34,5 +35,10 @@ class Item extends Model
     public function scrollEffectSpell(): BelongsTo
     {
         return $this->belongsTo(Spell::class, 'scrolleffect', 'id');
+    }
+
+    public function discovery(): HasOne
+    {
+        return $this->hasOne(DiscoveredItem::class, 'item_id', 'id');
     }
 }

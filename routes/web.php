@@ -29,6 +29,7 @@ if (config('everquest.char_mover_enabled')) {
     Route::post('/char-mover', [CharacterMoverController::class, 'store'])->name('char.mover.store');
 }
 Route::get('/character/{character}', [CharacterController::class, 'show'])->name('character.show');
+Route::get('/character/{character}/discovered-items', [CharacterController::class, 'discoveredItems'])->name('character.discovered.items');
 Route::get('/bazaar', [BazaarController::class, 'index'])->name('bazaar.index');
 Route::get('/trader-history', [TraderAuditController::class, 'index'])->name('history.index');
 Route::get('/barter', [BarterController::class, 'index'])->name('barter.index');

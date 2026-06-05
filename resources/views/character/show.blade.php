@@ -154,5 +154,17 @@
                 @include('character.partials.corpses')
             @endif
         </div>
+        @if (config('everquest.discovered_items.enable'))
+        <input type="radio" name="character_tabs" class="tab" aria-label="Discovered Items" />
+        <div class="tab-content bg-base-100 border-base-300 p-4 sm:p-6">
+            @if ($character->anon === 1)
+                <x-ui.alert-info>
+                    This character is set to Anonymous, so discovered items are hidden.
+                </x-ui.alert-info>
+            @else
+                @include('character.partials.discovered')
+            @endif
+        </div>
+        @endif
     </div>
 @endsection

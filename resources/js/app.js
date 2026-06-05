@@ -72,6 +72,41 @@ Alpine.data('itemSuggest', (initial = '') => ({
     }
 }));
 
+Alpine.data('discoveredList', (character = '') => ({
+    character,
+    items: [],
+    total: 0,
+    per_page: 50,
+    current_page: 1,
+    last_page: 1,
+    loading: false,
+
+    init() {
+        this.fetch(1);
+    },
+
+    async fetch(page = 1) {
+        this.loading = true;
+        try {
+            const res = await fetch(`/character/${encodeURIComponent(this.character)}/discovered-items?page=${page}&per_page=${this.per_page}`);
+            if (!res.ok) return;
+            const json = await res.json();
+            this.items = json.data || [];
+            this.total = json.total || 0;
+            this.per_page = json.per_page || this.per_page;
+            this.current_page = json.current_page || page;
+            this.last_page = json.last_page || 1;
+        } catch (e) {
+            console.error(e);
+        } finally {
+            this.loading = false;
+        }
+    },
+
+    prev() { if (this.current_page > 1) this.fetch(this.current_page - 1); },
+    next() { if (this.current_page < this.last_page) this.fetch(this.current_page + 1); },
+}));
+
 let zCounter = 1000;
 Alpine.data('draggableBag', ({ id }) => ({
     visible: false,

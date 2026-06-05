@@ -114,7 +114,7 @@ class CharacterData extends Model
         return $this->hasMany(CharacterAltCurrency::class, 'char_id');
     }
 
-    public function adventureStats()
+    public function adventureStats(): HasOne
     {
         return $this->hasOne(AdventureStat::class, 'player_id', 'id');
     }
@@ -122,6 +122,12 @@ class CharacterData extends Model
     public function tribute(): HasMany
     {
         return $this->hasMany(CharacterTribute::class, 'character_id');
+    }
+
+    public function discoveredItems(): HasMany
+    {
+        return $this->hasOne(DiscoveredItem::class, 'char_name', 'name')
+            ->select('id', 'name');
     }
 
     public function getDataBucketsByKey()

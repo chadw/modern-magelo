@@ -42,6 +42,13 @@ return [
     ],
 
     /**
+     * Discovered Items
+     */
+    'discovered_items' => [
+        'enable'            => true,       // enable discovered items on character page
+    ],
+
+    /**
      * Factions
      */
     'faction' => [

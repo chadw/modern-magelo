@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Account;
 use App\Models\BaseData;
 use App\Models\CharacterData;
+use App\Models\DiscoveredItem;
 use App\Models\FactionAssociation;
 use App\Models\GuildMember;
 use App\Models\Spell;
@@ -125,6 +126,41 @@ class CharacterController extends Controller
             'guild' => $guild,
             'factions' => $factions,
             'flags' => $flags,
+        ]);
+    }
+
+    public function discoveredItems(Request $request, CharacterData $character)
+    {
+        $perPage = (int) $request->query('per_page', 50);
+
+        $query = DiscoveredItem::query()
+            ->join('character_data', 'character_data.name', '=', 'discovered_items.char_name')
+            ->where('character_data.gm', 0)
+            ->where('discovered_items.char_name', $character->name)
+            ->with('item')
+            ->select('discovered_items.*')
+            ->orderByDesc('discovered_date');
+
+        $page = (int) $request->query('page', 1);
+
+        $paginator = $query->paginate($perPage, ['*'], 'page', $page);
+
+        $rows = [];
+        foreach ($paginator->items() as $disc) {
+            $instance = uniqid('disc_');
+            $html = view('character.partials.discovered_row', ['disc' => $disc, 'instance' => $instance])->render();
+            $rows[] = [
+                'item_id' => $disc->item_id,
+                'html' => $html,
+            ];
+        }
+
+        return response()->json([
+            'data' => $rows,
+            'total' => $paginator->total(),
+            'per_page' => $paginator->perPage(),
+            'current_page' => $paginator->currentPage(),
+            'last_page' => $paginator->lastPage(),
         ]);
     }
 
