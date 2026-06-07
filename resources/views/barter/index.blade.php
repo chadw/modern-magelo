@@ -34,7 +34,9 @@
                                 />
                             </td>
                             <td>{{ number_format($buyer->item_qty == -1 ? 1 : $buyer->item_qty) }}</td>
-                            <td>{{ number_format($buyer->item_price / 1000, 0) }} pp</td>
+                            <td>
+                                <x-currency :value="$buyer->item_price" />
+                            </td>
                             <td class="text-right">
                                 <a href="{{ route('character.show', strtolower($buyer->character->name)) }}"
                                     class="text-base link-info link-hover">

@@ -35,7 +35,9 @@
                                 />
                             </td>
                             <td>{{ number_format($trader->item_charges == -1 ? 1 : $trader->item_charges) }}</td>
-                            <td>{{ number_format($trader->item_cost / 1000, 0) }} pp</td>
+                            <td>
+                                <x-currency :value="$trader->item_cost" />
+                            </td>
                             <td class="text-right">
                                 <a href="{{ route('character.show', strtolower($trader->character->name)) }}"
                                     class="text-base link-info link-hover">
