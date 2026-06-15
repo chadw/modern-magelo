@@ -6,7 +6,7 @@ use App\Models\Account;
 use App\Models\BaseData;
 use App\Models\CharacterData;
 use App\Models\DiscoveredItem;
-use App\Models\FactionAssociation;
+use App\Models\FactionList;
 use App\Models\GuildMember;
 use App\Models\Spell;
 use App\Models\Zone;
@@ -97,23 +97,21 @@ class CharacterController extends Controller
 
         $stats = StatCalculation::calculate(collect($items['gear']));
 
-        $factions = FactionAssociation::with([
-            'factionList',
-            'factionList.classMod' => fn($q) => $q->where('mod_name', 'c' . $char->class),
-            'factionList.raceMod' => fn($q) => $q->where('mod_name', 'r' . $char->race),
-            'factionList.deityMod' => fn($q) => $q->where('mod_name', 'd' . $char->deity),
-        ])
-            ->get()
-            ->sortBy(fn($faction) => $faction->factionList->name ?? '')
+        $factions = FactionList::get()
+            ->sortBy(fn($f) => $f->name ?? '')
             ->values()
-            ->each(function ($faction) use ($char) {
-                $v = $char->faction->firstWhere('faction_id', $faction->id);
-                $faction->cmod = $faction->factionList->classMod->mod ?? 0;
-                $faction->rmod = $faction->factionList->raceMod->mod ?? 0;
-                $faction->dmod = $faction->factionList->deityMod->mod ?? 0;
-                $faction->char_value = $v->current_value ?? 0;
-                $faction->total = ($faction->factionList->base + $faction->cmod + $faction->rmod + $faction->dmod);
-            });
+            ->map(function ($factionList) use ($char) {
+                $v = $char->faction->firstWhere('faction_id', $factionList->id);
+                $obj = new \stdClass();
+                $obj->factionList = $factionList;
+                $obj->faction = $factionList->id;
+                $obj->id = $factionList->id;
+                $obj->char_value = $v->current_value ?? 0;
+                $obj->total = $obj->char_value;
+                return $obj;
+            })
+            ->filter(fn($o) => ($o->char_value ?? 0) !== 0)
+            ->values();
 
         return view('character.show', [
             'character' => $char,
