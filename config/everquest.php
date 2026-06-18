@@ -10,6 +10,8 @@
 return [
     'current_expansion'         => 9, // dragons of norrath
     'server_max_level'          => 70, // server max level
+    'alla_menu_name' => 'AllaClone',
+    'alla_base_url' => 'https://alla.lazaruseq.com/',            // https://alla.yourdomain.com
 
     // common item fields used when selecting item data in model relations
     'item_select_fields' => [
