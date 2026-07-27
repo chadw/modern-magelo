@@ -55,7 +55,7 @@
                                 @endif
                                 <div class="text-xs text-base-content/60">
                                     Total Transaction:
-                                    <x-currency :value="$log->totalcost * $log->quantity" />
+                                    <x-currency :value="$log->totalcost" />
                                 </div>
                             </td>
                             <td class="text-center">
@@ -64,7 +64,7 @@
                             <td>
                                 <div class="flex flex-col items-start gap-1 text-sm">
                                     <div class="flex justify-end gap-1">
-                                        <x-currency :value="$log->totalcost" />
+                                        <x-currency :value="$log->totalcost / $log->quantity" />
                                     </div>
                                 </div>
                             </td>
