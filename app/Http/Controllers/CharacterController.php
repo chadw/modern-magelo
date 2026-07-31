@@ -7,6 +7,7 @@ use App\Models\BaseData;
 use App\Models\CharacterData;
 use App\Models\DiscoveredItem;
 use App\Models\FactionList;
+use App\Models\FactionListMod;
 use App\Models\GuildMember;
 use App\Models\Spell;
 use App\Models\Zone;
@@ -97,17 +98,23 @@ class CharacterController extends Controller
 
         $stats = StatCalculation::calculate(collect($items['gear']));
 
+        $modKeys = ['r' . $char->race, 'c' . $char->class, 'd' . $char->deity];
+        $factionMods = FactionListMod::whereIn('mod_name', $modKeys)
+            ->get()
+            ->groupBy('faction_id');
+
         $factions = FactionList::get()
             ->sortBy(fn($f) => $f->name ?? '')
             ->values()
-            ->map(function ($factionList) use ($char) {
+            ->map(function ($factionList) use ($char, $factionMods) {
                 $v = $char->faction->firstWhere('faction_id', $factionList->id);
                 $obj = new \stdClass();
                 $obj->factionList = $factionList;
                 $obj->faction = $factionList->id;
                 $obj->id = $factionList->id;
                 $obj->char_value = $v->current_value ?? 0;
-                $obj->total = $obj->char_value;
+                $modSum = $factionMods->get($factionList->id, collect())->sum('mod');
+                $obj->total = $obj->char_value + $modSum;
                 return $obj;
             })
             ->filter(fn($o) => ($o->char_value ?? 0) !== 0)
